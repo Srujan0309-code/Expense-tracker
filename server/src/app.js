@@ -6,13 +6,18 @@ import morgan from "morgan";
 
 import cookieParser from "cookie-parser";
 
-import authRoutes from "./routes/authRoutes.js";
+import authRoutes from "./routes/authroutes.js";
 
 import transactionRoutes from "./routes/transactionRoutes.js";
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 

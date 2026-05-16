@@ -1,4 +1,4 @@
-import User from "../model/user.js";
+import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 
 import generateToken from "../utils/generateToken.js";
@@ -42,7 +42,7 @@ export const registerUser = async (req, res) => {
 res.cookie("token", token, {
   httpOnly: true,
   secure: false,
-  sameSite: "strict",
+  sameSite: "lax",
   maxAge: 7 * 24 * 60 * 60 * 1000,
 });
 
@@ -65,9 +65,46 @@ res.status(201).json({
 
 export const loginUser = async (req, res) => {
   try {
+    const { email, password } = req.body;
 
-    res.json({
-      message: "Login User",
+    if (!email || !password) {
+      return res.status(400).json({
+        message: "Email and password are required",
+      });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(401).json({
+        message: "Invalid email or password",
+      });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({
+        message: "Invalid email or password",
+      });
+    }
+
+    const token = generateToken(user._id);
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    res.status(200).json({
+      message: "Login successful",
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      },
     });
 
   } catch (error) {
@@ -77,4 +114,26 @@ export const loginUser = async (req, res) => {
     });
 
   }
+};
+
+export const getMe = async (req, res) => {
+  res.status(200).json({
+    user: {
+      id: req.user._id,
+      name: req.user.name,
+      email: req.user.email,
+    },
+  });
+};
+
+export const logoutUser = (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+  });
+
+  res.status(200).json({
+    message: "Logged out successfully",
+  });
 };

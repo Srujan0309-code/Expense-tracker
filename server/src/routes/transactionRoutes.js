@@ -6,7 +6,7 @@ import {
   deleteTransaction,
 } from "../controllers/transactionController.js";
 
-import { protect } from "../middlewares/authMiddleware.js";
+import { protect } from "../middlewares/authmiddleware.js";
 
 const router = express.Router();
 
