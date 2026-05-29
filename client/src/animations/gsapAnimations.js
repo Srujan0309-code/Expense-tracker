@@ -6,33 +6,33 @@ gsap.registerPlugin(ScrollTrigger);
 export const fadeInPage = (target) => {
   return gsap.fromTo(
     target,
-    { autoAlpha: 0, y: 18 },
-    { autoAlpha: 1, y: 0, duration: 0.75, ease: "power3.out" }
+    { opacity: 0, y: 18 },
+    { opacity: 1, y: 0, duration: 0.75, ease: "power3.out" }
   );
 };
 
 export const revealNavbar = (target) => {
   return gsap.fromTo(
     target,
-    { autoAlpha: 0, y: -22 },
-    { autoAlpha: 1, y: 0, duration: 0.7, ease: "power3.out" }
+    { opacity: 0, y: -22 },
+    { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }
   );
 };
 
 export const slideSidebar = (target) => {
   return gsap.fromTo(
     target,
-    { autoAlpha: 0, x: -36 },
-    { autoAlpha: 1, x: 0, duration: 0.8, ease: "power3.out" }
+    { opacity: 0, x: -36 },
+    { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" }
   );
 };
 
 export const staggerCards = (targets, delay = 0) => {
   return gsap.fromTo(
     targets,
-    { autoAlpha: 0, y: 28, scale: 0.98 },
+    { opacity: 0, y: 28, scale: 0.98 },
     {
-      autoAlpha: 1,
+      opacity: 1,
       y: 0,
       scale: 1,
       duration: 0.75,
@@ -61,14 +61,14 @@ export const animateCounter = (target, value, formatter) => {
 export const modalIn = (target) => {
   return gsap.fromTo(
     target,
-    { autoAlpha: 0, y: 30, scale: 0.94 },
-    { autoAlpha: 1, y: 0, scale: 1, duration: 0.35, ease: "power3.out" }
+    { opacity: 0, y: 30, scale: 0.94 },
+    { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "power3.out" }
   );
 };
 
 export const modalOut = (target, onComplete) => {
   return gsap.to(target, {
-    autoAlpha: 0,
+    opacity: 0,
     y: 24,
     scale: 0.96,
     duration: 0.25,
@@ -89,9 +89,9 @@ export const revealOnScroll = (targets) => {
   return gsap.utils.toArray(targets).map((target) =>
     gsap.fromTo(
       target,
-      { autoAlpha: 0, y: 34 },
+      { opacity: 0, y: 34 },
       {
-        autoAlpha: 1,
+        opacity: 1,
         y: 0,
         duration: 0.75,
         ease: "power3.out",
